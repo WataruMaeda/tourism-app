@@ -30,9 +30,10 @@ export default class SpotItem extends Component {
         <View style={styles.detailsContainer}>
           <View style={{ flexDirection: 'row' }}>
             <Image source={images.timer} style={styles.image} />
-            <Text style={styles.text}>{time} h</Text>
+            <Text style={styles.text}>{ open_now ? 'Open Now' : 'Close Now' }</Text>
           </View>
-          <Text style={styles.text}>{`$${open_now} - ${open_now}`}</Text>
+          {/* <Text style={styles.text}>{`$${open_now} - ${open_now}`}</Text> */}
+          <View />
         </View>
       </TouchableOpacity>
     );
@@ -96,12 +97,12 @@ const styles = {
   image: {
     width: 16,
     height: 16,
-    marginRight: 4,
+    marginRight: 8,
     tintColor: theme.colors.gray,
   },
   text: {
     fontFamily: theme.fonts.regular,
     color: theme.colors.gray,
-    fontSize: 14,
+    fontSize: 12,
   },
 };
