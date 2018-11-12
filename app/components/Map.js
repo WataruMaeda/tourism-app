@@ -2,20 +2,53 @@ import React, { Component } from 'react';
 import { MapView } from 'expo';
 import { Dimensions } from 'react-native';
 
+const initialRegion = {
+  latitude: 35.652832,
+  longitude: 139.839478,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+}
+
 export default class Map extends Component {
+  state = {
+    currentRegion: initialRegion,
+  }
+
+  // MARK: - Timer + Region callback
+
+  timer = null;
+
+  setTimerUpdateRegion = (region) => {
+    // since the region callback called frequentry, the last callback should be triggered
+    if (region && region.latitude && region.longitude) {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        const { onChangeRegion } = this.props;
+        if (onChangeRegion) {
+          const { latitude, longitude } = region
+          // trigger callback pass back to coodinate
+          onChangeRegion({
+            lat: latitude,
+            lng: longitude,
+          });
+        }
+      }, 500);
+    }
+    this.setState({ currentRegion: region })
+  }
+
+  // MARK: - Renders
 
   render() {
+    const { currentRegion = initialRegion } = this.state;
     return (
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        initialRegion={initialRegion}
+        region={currentRegion}
         onRegionChangeComplete={(region) => {
           console.log('[##] region', region)
+          this.setTimerUpdateRegion(region)
         }}
       />
     )

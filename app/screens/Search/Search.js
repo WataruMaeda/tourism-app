@@ -6,13 +6,13 @@ import { setNearbySpots } from '../../redux/actions/SearchActions';
 import { getSelectedPlaceTypes } from '../../redux/actions/UserActions';
 
 class Search extends Component {
-  componentWillMount() {
-    this.fetchNearbySpots(0);
+  state = {
+    placeTypeIdx: 0,
   }
 
-  fetchNearbySpots = (index) => {
+  fetchNearbySpots = (coodinate, index) => {
     const types = getSelectedPlaceTypes();
-    setNearbySpots(types[index]);
+    setNearbySpots(coodinate, types[index]);
   };
 
   renderListItem = ({ item, index }) => (
@@ -34,9 +34,14 @@ class Search extends Component {
         <SpotTypeCarousel
           didChangeItem={index => {
             this.fetchNearbySpots(index);
+            this.setState({ placeTypeIdx: index })
           }}
         />
-        <Map />
+        <Map onChangeRegion={(region) => {
+          console.log('[##] region is ', region)
+          const { placeTypeIdx = 0 } = this.state;
+          this.fetchNearbySpots(region, placeTypeIdx);
+        }}/>
         {spots && (
           <FlatList data={spots} renderItem={this.renderListItem} keyExtractor={item => item.id} />
         )}

@@ -11,26 +11,19 @@ export default class SpotItem extends Component {
   );
 
   renderInfo = () => {
-    const {
-      title,
-      imageURL = '',
-      rate = 0,
-      total = 0,
-      time,
-      price_from,
-      price_to,
-      open_now } = this.props.data;
-
+    const { title, rate = 0, open_now } = this.props.data;
     return (
       <TouchableOpacity style={styles.infoContainer} onPress={this.props.onPress}>
         <View>
-          <Text style={styles.title} numberOfLines={1}>{title}</Text>
-          <Rate rate={rate} total={rate}/>
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
+          <Rate rate={rate} total={rate} />
         </View>
         <View style={styles.detailsContainer}>
           <View style={{ flexDirection: 'row' }}>
             <Image source={images.timer} style={styles.image} />
-            <Text style={styles.text}>{ open_now ? 'Open Now' : 'Close Now' }</Text>
+            <Text style={styles.text}>{open_now ? 'Open Now' : 'Close Now'}</Text>
           </View>
           {/* <Text style={styles.text}>{`$${open_now} - ${open_now}`}</Text> */}
           <View />
@@ -45,10 +38,11 @@ export default class SpotItem extends Component {
         <Image
           source={images.arrow}
           style={[styles.image, { width: 12, height: 12 }]}
-          resizeMode={'contain'} />
+          resizeMode={'contain'}
+        />
       </View>
     );
-  }
+  };
 
   render() {
     return (
