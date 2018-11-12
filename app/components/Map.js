@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import { Dimensions } from 'react-native';
 
@@ -9,7 +10,7 @@ const initialRegion = {
   longitudeDelta: 0.0421,
 }
 
-export default class Map extends Component {
+class Map extends Component {
   state = {
     currentRegion: initialRegion,
   }
@@ -40,6 +41,7 @@ export default class Map extends Component {
   // MARK: - Renders
 
   render() {
+    const { spots } = this.props;
     const { currentRegion = initialRegion } = this.state;
     return (
       <MapView
@@ -49,11 +51,22 @@ export default class Map extends Component {
         onRegionChangeComplete={(region) => {
           console.log('[##] region', region)
           this.setTimerUpdateRegion(region)
-        }}
-      />
+        }}>
+        { spots && spots.map((spot) => (
+          <MapView.Marker
+            title={spot.title}
+            coordinate={{
+              latitude: spot.lat,
+              longitude: spot.lng,
+            }}
+          />
+        )) }
+      </ MapView>
     )
   }
 }
+
+// MARK: - Styles
 
 const { width } = Dimensions.get('window');
 
@@ -67,3 +80,13 @@ const styles = {
     height: width / 1.68,
   },
 };
+
+// MARK: - Redux
+
+const mapStateToProps = state => {
+  return {
+    spots: state.search.spotsNearby,
+  };
+};
+
+export default connect(mapStateToProps)(Map);
