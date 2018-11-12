@@ -23,7 +23,7 @@ export default class Header extends Component {
           <ImageCached
             uri={'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cce4201e8d3a1905d4a5e7a99b2dfd53&auto=format&fit=crop&w=1050&q=80'}
             style={[styles.image, imgStyle]}
-            />
+          />
           <Text style={styles.name}>エリザベス</Text>
           <View style={styles.snsCotnainer}>
             <ImageButton

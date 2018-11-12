@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import { Dimensions } from 'react-native';
+import { ImageCached } from '../components';
+import * as themes from '../utils/Theme';
 
 const initialRegion = {
   latitude: 35.652832,
@@ -43,6 +45,7 @@ class Map extends Component {
   render() {
     const { spots } = this.props;
     const { currentRegion = initialRegion } = this.state;
+    const { Marker } = MapView;
     return (
       <MapView
         style={styles.map}
@@ -53,13 +56,17 @@ class Map extends Component {
           this.setTimerUpdateRegion(region)
         }}>
         { spots && spots.map((spot) => (
-          <MapView.Marker
+          <Marker
             title={spot.title}
             coordinate={{
               latitude: spot.lat,
               longitude: spot.lng,
-            }}
-          />
+            }}>
+            <ImageCached
+              uri={spot.imageURL}
+              style={styles.image}
+            />
+          </Marker>
         )) }
       </ MapView>
     )
@@ -78,6 +85,14 @@ const styles = {
   map: {
     width: '100%',
     height: width / 1.68,
+  },
+  image: {
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: themes.colors.sub,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
   },
 };
 
