@@ -11,9 +11,9 @@ export const setNearbySpots = (coodinate, placeType) => {
   axios.get(url).then(res => {
     const { data } = res;
     if (data && data.results) {
-      console.log('[#] get nearby results', data.results);
+      // console.log('[#] get nearby results', data.results);
       const parsedData = parseSpotsNearby(data.results)
-      console.log('[#] parsed spots', parsedData);
+      // console.log('[#] parsed spots', parsedData);
       store.dispatch(storeSpotsNearby(parsedData))
     }
   }).catch((e) => {
