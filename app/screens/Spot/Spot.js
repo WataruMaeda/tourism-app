@@ -6,16 +6,15 @@ import { getSpotDetails } from '../../redux/actions/SpotActions'
 
 export default class Spot extends Component {
   state = {
-    spots: null,
+    spot: null,
   }
 
   componentWillMount() {
     const { navigation } = this.props;
     const placeId = navigation.getParam('place_id')
     if (placeId) {
-      getSpotDetails(placeId).then(spots => {
-        console.log('[##] spots persed', spots)
-        if (spots) this.setState({ spots })
+      getSpotDetails(placeId).then(spot => {
+        if (spot) this.setState({ spot })
       }).catch(e => {
         alert('hmm error..')
       })
@@ -23,17 +22,17 @@ export default class Spot extends Component {
   }
 
   render() {
-    const { spots } = this.state;
-    if (!spots) return null;
+    const { spot } = this.state;
+    if (!spot) return null;
+    const { imageUrls } = spot
+    const uri = imageUrls && imageUrls.length > 0 ? imageUrls[0] : ''
     return (
       <View style={styles.container}>
         <Parallax
-          backgroundSource={{ 
-            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8vn3gtpzy31ETeBHeKnw9dyYxVYPuMFUtwLHMeBl6r5FtBcifRw',
-           }}
+          backgroundSource={{ uri }}
           windowHeight={height}
           coverStatusBar
-          header={<Header navigation={this.props.navigation} />}
+          header={<Header spot={spot} navigation={this.props.navigation} />}
           scrollableViewStyle={{ backgroundColor: 'white' }}>
           <Text>aaaa</Text>
         </Parallax>

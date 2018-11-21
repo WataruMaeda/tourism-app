@@ -40,6 +40,7 @@ class SpotNearby {
 class Spot {
   constructor(spot) {
     const {
+      address_components,
       formatted_address,
       formatted_phone_number,
       geometry,
@@ -83,6 +84,19 @@ class Spot {
         if (photo_reference) imageUrls.push(`${Urls.photos_m}&photoreference=${photo_reference}`)
       })
       this.imageUrls = imageUrls
+    }
+
+    if (address_components && address_components.length > 0) {
+      address_components.forEach(component => {
+        const { long_name, short_name, types } = component
+        if (long_name && short_name && types && types.length > 0) {
+          types.forEach((type, idx) => {
+            if (type === 'country') {
+              this.country = idx === 0 ? long_name : short_name
+            }
+          })
+        }
+      })
     }
   }
 }

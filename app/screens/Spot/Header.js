@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash'
 import { Text, View, Image } from 'react-native';
 import { ImageButton, ImageCached, Rate } from '../../components';
 import { images } from '../../../assets';
@@ -27,34 +28,35 @@ export default class Header extends Component {
   };
 
   renderFooter = () => {
+    const { spot } = this.props;
+    const {
+      name = '',
+      rating = 0,
+      imageUrls = [],
+      country = '',
+    } = spot
     return (
       <View style={styles.footerContainer}>
-        <Text style={styles.title}>テストテストテスト</Text>
+        <Text style={styles.title}>{name}</Text>
         <View style={styles.footerBottomContainer}>
           <View style={styles.infoContainer}>
-            <Rate rate={3} total={'20'} />
+            <Rate rate={rating} total={rating} />
             <View style={styles.locationContainer}>
               <Image source={images.location} style={styles.locaitonImage} resizeMode={'contain'} />
-              <Text style={styles.location}>ロケーション</Text>
+              <Text style={styles.location}>{country}</Text>
             </View>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <ImageCached
-              uri={
-                'https://atmosphereresorts.com/wp-content/uploads/2015/06/Atmosphere-Resorts-Spa-Luxury-Resort.jpg'
-              }
+              uri={ imageUrls[1] }
               style={styles.spotImage}
             />
             <ImageCached
-              uri={
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Town_and_Country_fh000023.jpg/1200px-Town_and_Country_fh000023.jpg'
-              }
+              uri={ imageUrls[2] }
               style={styles.spotImage}
             />
             <ImageCached
-              uri={
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbcYMKjPp7k55MXvpaWt7KcjTawXhcfML13gevMa2Vqcfg0Nqf'
-              }
+              uri={ imageUrls[3] }
               style={styles.spotImage}
             />
             <ImageButton
