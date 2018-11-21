@@ -43,7 +43,14 @@ const searchNavigator = createStackNavigator({
   Spot: {
     screen: Spot,
     navigationOptions: ({ navigation }) => ({
-      header: null,
+      // header: null,
+      title: 'Spot',
+      headerTintColor: 'white',
+      headerStyle: { backgroundColor: theme.colors.main },
+      headerTitleStyle: {
+        fontSize: 18,
+        fontFamily: theme.fonts.heavy,
+      },
     }),
   },
 });

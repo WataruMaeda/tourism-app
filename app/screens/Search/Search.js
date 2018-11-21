@@ -4,8 +4,6 @@ import { View, StatusBar, FlatList } from 'react-native';
 import { SpotTypeCarousel, SpotItem, Map } from '../../components';
 import { setNearbySpots } from '../../redux/actions/SearchActions';
 import { getSelectedPlaceTypes } from '../../redux/actions/UserActions';
-import { setSpotDetails } from '../../redux/actions/SpotActions'
-import { compose } from 'redux';
 
 const initialCoodinate = {
   lat: 35.652832,
@@ -28,13 +26,10 @@ class Search extends Component {
       key={index}
       data={item}
       onPress={() => {
-        // set place details
-        console.log('[##] place id', item.place_id)
-        setSpotDetails(item.place_id);
-
         // navigatte to the place details page
+        const { place_id } = item
         const { navigation } = this.props;
-        navigation.navigate('Spot');
+        navigation.navigate('Spot', { place_id });
       }}
     />
   );
