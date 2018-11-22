@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Dimensions } from 'react-native';
 import { Parallax } from '../../components';
 import Header from './Header';
+import Info from './Info';
 import { getSpotDetails } from '../../redux/actions/SpotActions'
 
 export default class Spot extends Component {
@@ -16,6 +17,7 @@ export default class Spot extends Component {
       getSpotDetails(placeId).then(spot => {
         if (spot) this.setState({ spot })
       }).catch(e => {
+        console.log('[###] err err !', e)
         alert('hmm error..')
       })
     }
@@ -34,7 +36,7 @@ export default class Spot extends Component {
           coverStatusBar
           header={<Header spot={spot} navigation={this.props.navigation} />}
           scrollableViewStyle={{ backgroundColor: 'white' }}>
-          <Text>aaaa</Text>
+          <Info spot={spot} />
         </Parallax>
       </View>
     );

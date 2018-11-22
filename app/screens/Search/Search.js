@@ -39,6 +39,11 @@ class Search extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle={'light-content'} />
+        <Map onChangeRegion={(coodinate) => {
+          const { placeTypeIdx = 0 } = this.state;
+          this.fetchNearbySpots(coodinate, placeTypeIdx);
+          this.setState({ currentCoodinate: coodinate })
+        }}/>
         <SpotTypeCarousel
           didChangeItem={index => {
             const { currentCoodinate = initialCoodinate } = this.state;
@@ -46,12 +51,6 @@ class Search extends Component {
             this.setState({ placeTypeIdx: index })
           }}
         />
-        <Map onChangeRegion={(coodinate) => {
-          console.log('[##] region is ', coodinate)
-          const { placeTypeIdx = 0 } = this.state;
-          this.fetchNearbySpots(coodinate, placeTypeIdx);
-          this.setState({ currentCoodinate: coodinate })
-        }}/>
         {spots && (
           <FlatList data={spots} renderItem={this.renderListItem} keyExtractor={item => item.id} />
         )}
