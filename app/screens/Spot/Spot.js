@@ -17,7 +17,6 @@ export default class Spot extends Component {
       getSpotDetails(placeId).then(spot => {
         if (spot) this.setState({ spot })
       }).catch(e => {
-        console.log('[###] err err !', e)
         alert('hmm error..')
       })
     }

@@ -57,6 +57,7 @@ export default class Header extends Component {
           <View style={{ flexDirection: 'row' }}>
             { uris.map(uri => (
               <ImageCached
+                key={uri}
                 uri={uri}
                 style={styles.spotImage}
               />

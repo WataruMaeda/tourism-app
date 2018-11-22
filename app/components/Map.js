@@ -57,6 +57,7 @@ class Map extends Component {
         }}>
         { spots && spots.map((spot) => (
           <Marker
+            key={spot.id}
             title={spot.title}
             coordinate={{
               latitude: spot.lat,
@@ -67,7 +68,7 @@ class Map extends Component {
               style={styles.image}
             />
           </Marker>
-        )) }
+        ))}
       </ MapView>
     )
   }
