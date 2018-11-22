@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
 import { Text, View, Image } from 'react-native';
 import { ImageButton, ImageCached, Rate } from '../../components';
 import { images } from '../../../assets';
@@ -35,6 +34,15 @@ export default class Header extends Component {
       imageUrls = [],
       country = '',
     } = spot
+
+    // get first 3 image urls
+    var uris = []
+    if (imageUrls.length > 1) {
+      for (var i = 1; i < imageUrls.length; i++) {
+        if (i < 4) uris.push(imageUrls[i])
+      }
+    }
+
     return (
       <View style={styles.footerContainer}>
         <Text style={styles.title}>{name}</Text>
@@ -47,18 +55,12 @@ export default class Header extends Component {
             </View>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <ImageCached
-              uri={ imageUrls[1] }
-              style={styles.spotImage}
-            />
-            <ImageCached
-              uri={ imageUrls[2] }
-              style={styles.spotImage}
-            />
-            <ImageCached
-              uri={ imageUrls[3] }
-              style={styles.spotImage}
-            />
+            { uris.map(uri => (
+              <ImageCached
+                uri={uri}
+                style={styles.spotImage}
+              />
+            )) }
             <ImageButton
               source={images.arrow}
               imageStyle={{ width: 16, height: 44, marginRight: 8 }}
